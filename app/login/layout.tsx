@@ -1,0 +1,14 @@
+import Link from "next/link";
+import React, { ReactNode } from "react";
+
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export default function Layout({ children }: LayoutProps) {
+  return (
+    <>
+      <div>{children}</div>
+    </>
+  );
+}
