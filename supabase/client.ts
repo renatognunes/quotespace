@@ -26,6 +26,18 @@ export async function getAllQuotes() {
   }
 }
 
+export async function createNewQuote({ userId, bookId, quote }: any) {
+  try {
+    const { error } = await supabase.from("all_quotes").insert({
+      owner_id: userId,
+      book_id: bookId,
+      quote: quote,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getAllBooks() {
   try {
     const { data, error } = await supabase

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { AllBooks, AllQuotes } from "../../supabase/types";
 import {
@@ -11,14 +11,40 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/outline";
 import QuoteForm from "./forms/QuoteForm";
+import { supabase } from "../../supabase/client";
+import { REALTIME_LISTEN_TYPES } from "@supabase/supabase-js";
 
 interface FeedProps {
-  quotes: AllQuotes[];
+  quotesServer: AllQuotes[];
   books: AllBooks[];
 }
 
-export default function Feed({ quotes, books }: FeedProps) {
+export default function Feed({ quotesServer, books }: FeedProps) {
   const [open, setOpen] = useState(false);
+  const [quotes, setQuotes] = useState<AllQuotes[]>([]);
+
+  useEffect(() => {
+    setQuotes(quotesServer);
+  }, [quotesServer]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("public:all_quotes")
+      .on(
+        REALTIME_LISTEN_TYPES.POSTGRES_CHANGES,
+        { event: "INSERT", schema: "public", table: "all_quotes" },
+        (payload) =>
+          setQuotes((quotes) => [
+            { ...payload.new, all_books: { title: "demo" } } as AllQuotes,
+            ...quotes,
+          ])
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [quotesServer]);
 
   useEffect(() => {
     if (open) document.body.style.overflow = "hidden";
@@ -28,10 +54,10 @@ export default function Feed({ quotes, books }: FeedProps) {
   return (
     <section aria-label="All quotes">
       <div className="flex flex-row content-center justify-between">
-        <h1 className="text-4xl font-bold text-slate-700">Top Quotes</h1>
+        <h1 className="text-lg font-bold text-slate-700">Top Quotes</h1>
         <button
           onClick={() => setOpen(!open)}
-          className="flex items-center justify-center gap-4 rounded-md border bg-lime-600 px-4 font-semibold text-white"
+          className="flex items-center justify-center gap-4 rounded-md border bg-lime-600 px-4 py-2 text-md font-semibold text-white"
         >
           Quote
           <PencilSquareIcon className="h-6 w-6 text-white" />
@@ -39,12 +65,12 @@ export default function Feed({ quotes, books }: FeedProps) {
       </div>
       {open && (
         <div className="before:fixed before:right-0 before:top-0 before:h-screen before:w-screen before:bg-black before:opacity-50 before:content-['']">
-          <article className="fixed right-0 left-0 m-auto max-w-3xl rounded-md border bg-zinc-50 p-10 shadow-md">
+          <article className="fixed right-0 left-0 m-auto max-w-[60rem] rounded-md border bg-zinc-50 p-6 shadow-md">
             <header
               aria-label="New Quote Popup"
               className="mb-6 flex flex-row justify-between"
             >
-              <h2 className="text-2xl font-semibold text-slate-700">
+              <h2 className="text-lg font-semibold text-slate-700">
                 New Quote
               </h2>
               <button onClick={() => setOpen(false)}>
@@ -53,7 +79,7 @@ export default function Feed({ quotes, books }: FeedProps) {
             </header>
 
             <div className="">
-              <QuoteForm books={books} />
+              <QuoteForm setOpen={setOpen} books={books} />
             </div>
           </article>
         </div>
@@ -80,7 +106,9 @@ export default function Feed({ quotes, books }: FeedProps) {
                 <q className="text-lg font-semibold text-slate-700">
                   {quote.quote}
                 </q>
-                <p className="text-slate-500">- {quote.all_books.title}</p>
+                <p className="text-md text-slate-500">
+                  - {quote.all_books.title}
+                </p>
               </div>
               <div className="flex gap-10 self-end">
                 <button
