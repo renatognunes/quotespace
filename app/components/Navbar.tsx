@@ -18,36 +18,27 @@ export default function Navbar({ isLogged }: any) {
     }
   };
   return (
-    <header>
-      <nav aria-label="Main navigation" className="h-14 px-8">
-        <ul className="flex h-full flex-row items-center justify-between font-semibold text-[#212121]">
-          <li className="justify-items-start">
-            <Link href="/" aria-label="Home">
-              Quotepedia
-            </Link>
-          </li>
-          {isLogged ? (
-            <div className="flex gap-6">
-              <li>
-                <Link href="/likes">Likes</Link>
-              </li>
-              <li>
-                <button onClick={handleLogout}>Logout</button>
-              </li>
-            </div>
-          ) : (
-            <div className="flex gap-6">
-              <li>
-                <Link href="/signup">Sign Up</Link>
-              </li>
-              <li>
-                <Link href="/login">Login</Link>
-              </li>
-            </div>
-          )}
-        </ul>
-      </nav>
-    </header>
+    <nav aria-label="Main navigation" className="h-10">
+      <ul className="flex h-full w-full flex-row items-center justify-end gap-4 text-md font-semibold text-[#212121]">
+        <li className="mr-auto text-lg">
+          <Link href="/" aria-label="Home">
+            Quotespace
+          </Link>
+        </li>
+        <li className={isLogged ? "block" : "hidden"}>
+          <Link href="/likes">Likes</Link>
+        </li>
+        <li className={isLogged ? "block" : "hidden"}>
+          <button onClick={handleLogout}>Logout</button>
+        </li>
+        <li className={!isLogged ? "block" : "hidden"}>
+          <Link href="/signup">Sign Up</Link>
+        </li>
+        <li className={!isLogged ? "block" : "hidden"}>
+          <Link href="/login">Login</Link>
+        </li>
+      </ul>
+    </nav>
   );
 }
 

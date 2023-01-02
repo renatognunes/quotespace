@@ -17,14 +17,14 @@ export default function LoginForm() {
   }, [username, password, router]);
 
   return (
-    <div className=" m-auto mt-12 max-w-lg rounded-md border bg-zinc-50 p-10 shadow-md">
-      <h2 className="mb-6 text-2xl font-bold">Login</h2>
+    <div className=" m-auto mt-12 max-w-2xl rounded-md border bg-zinc-50 p-10 shadow-md">
+      <h2 className="mb-6 text-lg font-bold">Login</h2>
       <form
         onSubmit={(e) => {
           e.preventDefault();
           handleLogin();
         }}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-6 text-md"
       >
         <label className="flex flex-col">
           Username

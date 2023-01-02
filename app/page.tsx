@@ -8,5 +8,7 @@ export default async function Page() {
 
   if (!quotes) return <></>;
 
-  return <Feed quotes={quotes as AllQuotes[]} books={books as AllBooks[]} />;
+  return (
+    <Feed quotesServer={quotes as AllQuotes[]} books={books as AllBooks[]} />
+  );
 }

@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import supabaseServer from "../supabase/server";
 import Navbar from "./components/Navbar";
+import Container from "./components/shared/Container";
 import SupabaseListener from "./components/supabaseListener";
 
 export default async function RootLayout({
@@ -17,10 +18,18 @@ export default async function RootLayout({
   return (
     <html>
       <SupabaseListener accessToken={session?.access_token} />
-      <body>
-        <Navbar isLogged={!!session?.user} />
-        <main className="mx-auto max-w-3xl">{children}</main>
-        <footer className=""></footer>
+      <body className="flex flex-col gap-[8rem]">
+        <header>
+          <Container>
+            <Navbar isLogged={!!session?.user} />
+          </Container>
+        </header>
+        <main>
+          <Container>{children}</Container>
+        </main>
+        <footer>
+          <Container>{""}</Container>
+        </footer>
       </body>
     </html>
   );
