@@ -1,6 +1,6 @@
 import { getAllBooks, getAllQuotes } from "../supabase/client";
 import { AllBooks, AllQuotes } from "../supabase/types";
-import Feed from "./components/Feed";
+import HomeFeed from "./components/HomeFeed";
 
 export default async function Page() {
   const quotes = await getAllQuotes();
@@ -9,6 +9,9 @@ export default async function Page() {
   if (!quotes) return <></>;
 
   return (
-    <Feed quotesServer={quotes as AllQuotes[]} books={books as AllBooks[]} />
+    <HomeFeed
+      quotesServer={quotes as AllQuotes[]}
+      books={books as AllBooks[]}
+    />
   );
 }

@@ -30,7 +30,7 @@ export default function QuoteForm({ books, setOpen }: QuoteFormProps) {
 
   const handleQuote = useCallback(async () => {
     if (text && bookId && user) {
-      await createNewQuote({ quote: text, bookId, user });
+      await createNewQuote({ quote: text, bookId, userId: user.id });
 
       setOpen(false);
     }

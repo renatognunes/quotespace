@@ -26,7 +26,7 @@ export default function Navbar({ isLogged }: any) {
           </Link>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
-          <Link href="/likes">Likes</Link>
+          <Link href="/profile">Profile</Link>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
           <button onClick={handleLogout}>Logout</button>
@@ -41,5 +41,3 @@ export default function Navbar({ isLogged }: any) {
     </nav>
   );
 }
-
-// export default Navbar;
