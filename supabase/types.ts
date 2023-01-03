@@ -57,6 +57,7 @@ export interface Database {
           likes: number | null;
           shares: number | null;
           book_id: number;
+          owner_id: string | null;
         };
         Insert: {
           id?: number;
@@ -65,6 +66,7 @@ export interface Database {
           likes?: number | null;
           shares?: number | null;
           book_id: number;
+          owner_id?: string | null;
         };
         Update: {
           id?: number;
@@ -73,6 +75,7 @@ export interface Database {
           likes?: number | null;
           shares?: number | null;
           book_id?: number;
+          owner_id?: string | null;
         };
       };
     };
