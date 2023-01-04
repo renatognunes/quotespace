@@ -41,6 +41,19 @@ export async function getUserQuotes(userId?: string) {
   }
 }
 
+export async function getUserLikedQuotes() {
+  // if (!userId) return;
+
+  try {
+    const { data, error } = await supabase.from("likes").select("*");
+    // console.log(data);
+
+    if (!error) return data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function createNewQuote({ userId, bookId, quote }: any) {
   try {
     await supabase.from("all_quotes").insert({

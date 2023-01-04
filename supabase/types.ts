@@ -78,6 +78,26 @@ export interface Database {
           owner_id?: string | null;
         };
       };
+      likes: {
+        Row: {
+          id: number;
+          created_at: string | null;
+          user_id: string | null;
+          quote_id: number | null;
+        };
+        Insert: {
+          id?: number;
+          created_at?: string | null;
+          user_id?: string | null;
+          quote_id?: number | null;
+        };
+        Update: {
+          id?: number;
+          created_at?: string | null;
+          user_id?: string | null;
+          quote_id?: number | null;
+        };
+      };
     };
     Views: {
       [_ in never]: never;
