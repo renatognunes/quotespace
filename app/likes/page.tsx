@@ -17,8 +17,9 @@ export default async function Page() {
 
   return (
     <section aria-label="All quotes">
-      <h1 className="text-lg font-bold text-slate-700">My quotes</h1>
+      <h1 className="text-lg font-bold text-slate-700">Liked quotes</h1>
       <Feed
+        liked
         quotes={quotes.map((quote) => ({ ...quote.all_quotes })) as AllQuotes[]}
       />
     </section>
