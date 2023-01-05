@@ -26,6 +26,9 @@ export default function Navbar({ isLogged }: any) {
           </Link>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
+          <Link href="/likes">Likes</Link>
+        </li>
+        <li className={isLogged ? "block" : "hidden"}>
           <Link href="/profile">Profile</Link>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
