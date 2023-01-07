@@ -1,27 +1,24 @@
-import { getUserLikedQuotes } from "../../supabase/client";
-import supabaseServer from "../../supabase/server";
+import supabaseServer, { getLikedQuotesIds } from "../../supabase/server";
 import { AllQuotes } from "../../supabase/types";
 import { Feed } from "../components/shared/Feed";
 
 export default async function Page() {
   const supabase = supabaseServer();
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  const { data: quotes, error } = await supabase
-    .from("likes")
-    .select("all_quotes(id, quote, likes, shares, all_books(title))");
+  const likedQuotesIds = await getLikedQuotesIds();
 
-  if (!quotes) return <></>;
+  const { data: quotes, error: quotesError } = await supabase
+    .from("all_quotes")
+    .select("id, quote, likes, shares, all_books(title)")
+    .in("id", likedQuotesIds);
+
+  if (!true) return <></>;
 
   return (
     <section aria-label="All quotes">
       <h1 className="text-lg font-bold text-slate-700">Liked quotes</h1>
-      <Feed
-        liked
-        quotes={quotes.map((quote) => ({ ...quote.all_quotes })) as AllQuotes[]}
-      />
+      {/* @ts-expect-error Server Component */}
+      <Feed quotes={quotes as AllQuotes[]} />
     </section>
   );
 }
