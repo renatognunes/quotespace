@@ -9,12 +9,12 @@ import { supabase } from "../../../supabase/client";
 
 export const Card = ({
   quote,
-  liked,
+  isLiked,
 }: {
-  liked?: boolean;
+  isLiked: boolean;
   quote: AllQuotes;
 }) => {
-  const [isLiked, setIsLiked] = useState(!!liked);
+  const [like, setLike] = useState(!!isLiked);
   const [nOfLikes, setNOfLikes] = useState(quote.likes || 0);
 
   const [userId, setUserId] = useState("");
@@ -34,27 +34,36 @@ export const Card = ({
 
   const handleLike = useCallback(async () => {
     try {
-      if (isLiked) {
+      if (like) {
         await supabase.from("likes").delete().eq("quote_id", quote.id);
         await supabase
           .from("all_quotes")
-          .update({ likes: (quote.likes || 0) + 1 });
+          .update({
+            likes:
+              quote?.likes !== null && quote.likes > 0 ? quote.likes - 1 : 0,
+          })
+          .eq("id", quote.id);
 
-        setIsLiked(false);
+        setLike(false);
+        setNOfLikes((n) => --n);
       } else {
         await supabase
           .from("likes")
           .insert({ quote_id: quote.id, user_id: userId });
-        await supabase.from("all_quotes").update({
-          likes: quote?.likes !== null && quote.likes > 0 ? quote.likes - 1 : 0,
-        });
+        await supabase
+          .from("all_quotes")
+          .update({
+            likes: 1,
+          })
+          .eq("id", quote.id);
 
-        setIsLiked(true);
+        setLike(true);
+        setNOfLikes((n) => ++n);
       }
     } catch (error) {
       console.log(error);
     }
-  }, [userId, isLiked, quote]);
+  }, [userId, like, quote]);
 
   return (
     <article
@@ -79,7 +88,7 @@ export const Card = ({
             aria-label="Like quote"
             onClick={handleLike}
           >
-            {isLiked ? (
+            {like ? (
               <HeartIconSolid className=" mr-2 inline h-6 w-6" color="red" />
             ) : (
               <HeartIcon className="mr-2 inline h-6 w-6" />
