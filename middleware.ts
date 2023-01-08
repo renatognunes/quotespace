@@ -19,5 +19,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/profile", "/likes"],
+  matcher: ["/profile", "/bookmarks"],
 };

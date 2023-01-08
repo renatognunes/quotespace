@@ -18,15 +18,13 @@ export default async function RootLayout({
   return (
     <html>
       <SupabaseListener accessToken={session?.access_token} />
-      <body className="flex flex-col gap-[8rem]">
+      <body className="mx-auto flex flex-col gap-[8rem] bg-black">
         <header>
           <Container>
             <Navbar isLogged={!!session?.user} />
           </Container>
         </header>
-        <main>
-          <Container>{children}</Container>
-        </main>
+        <main className="mx-auto w-full max-w-[70rem]">{children}</main>
         <footer>
           <Container>{""}</Container>
         </footer>
