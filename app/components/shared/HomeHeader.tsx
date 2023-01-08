@@ -37,8 +37,8 @@ export const HomeHeader = ({ books }: { books: AllBooks[] }) => {
   // }, [quotesServer]);
 
   useEffect(() => {
-    if (open) document.body.style.overflow = "hidden";
-    else document.body.style.overflow = "unset";
+    const html = document.querySelector("html");
+    if (html) html.classList.toggle("overflow-hidden", open);
   }, [open]);
 
   return (
