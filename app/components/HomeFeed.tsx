@@ -1,5 +1,4 @@
 import React from "react";
-// import { getAllBooks, getAllQuotes } from "../../supabase/client";
 import supabaseServer from "../../supabase/server";
 import { Feed } from "./shared/Feed";
 import { HomeHeader } from "./shared/HomeHeader";
@@ -8,7 +7,8 @@ export default async function HomeFeed() {
   const supabase = supabaseServer();
   const { data: quotes, quotesError } = await supabase
     .from("all_quotes")
-    .select("id, quote, likes, shares, all_books(title)");
+    .select("id, quote, likes, shares, all_books(title, cover_image)")
+    .order("likes", { ascending: false });
   const { data: books, booksError } = await supabase
     .from("all_books")
     .select("id, title");

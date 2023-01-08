@@ -1,4 +1,3 @@
-import { getAllQuotes, getUserQuotes } from "../../supabase/client";
 import supabaseServer from "../../supabase/server";
 import { AllQuotes } from "../../supabase/types";
 import { Feed } from "../components/shared/Feed";
@@ -9,7 +8,10 @@ export default async function Page() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const quotes = await getUserQuotes(user?.id);
+  const { data: quotes, error } = await supabase
+    .from("all_quotes")
+    .select("id, quote, likes, shares, all_books(title, cover_image)")
+    .eq("owner_id", user.id);
 
   if (!quotes) return <></>;
 

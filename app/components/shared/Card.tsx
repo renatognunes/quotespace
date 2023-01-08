@@ -39,8 +39,7 @@ export const Card = ({
         await supabase
           .from("all_quotes")
           .update({
-            likes:
-              quote?.likes !== null && quote.likes > 0 ? quote.likes - 1 : 0,
+            likes: nOfLikes - 1,
           })
           .eq("id", quote.id);
 
@@ -53,7 +52,7 @@ export const Card = ({
         await supabase
           .from("all_quotes")
           .update({
-            likes: 1,
+            likes: nOfLikes + 1,
           })
           .eq("id", quote.id);
 
@@ -63,7 +62,7 @@ export const Card = ({
     } catch (error) {
       console.log(error);
     }
-  }, [userId, like, quote]);
+  }, [userId, like, quote, nOfLikes]);
 
   return (
     <article
@@ -74,7 +73,7 @@ export const Card = ({
         className="shadow-md"
         width="100"
         height="100"
-        src={"/images/alchemist-cover.jpeg"}
+        src={`/images/${quote.all_books.cover_image}-cover.jpeg`}
         alt="Cover Naval Book"
       />
       <div className="flex w-full flex-col justify-between">
@@ -100,7 +99,6 @@ export const Card = ({
             aria-label="Share quote"
           >
             <ArrowUpTrayIcon className="mr-2 inline h-6 w-6" />
-            <span>{quote.shares}</span>
           </button>
         </div>
       </div>

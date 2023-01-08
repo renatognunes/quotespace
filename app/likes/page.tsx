@@ -9,7 +9,7 @@ export default async function Page() {
 
   const { data: quotes, error: quotesError } = await supabase
     .from("all_quotes")
-    .select("id, quote, likes, shares, all_books(title)")
+    .select("id, quote, likes, shares, all_books(title, cover_image)")
     .in("id", likedQuotesIds);
 
   if (!true) return <></>;

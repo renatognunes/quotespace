@@ -33,6 +33,7 @@ export interface Database {
           title: string;
           year: string | null;
           author_id: number;
+          cover_image: string | null;
         };
         Insert: {
           id?: number;
@@ -40,6 +41,7 @@ export interface Database {
           title: string;
           year?: string | null;
           author_id: number;
+          cover_image?: string | null;
         };
         Update: {
           id?: number;
@@ -47,6 +49,7 @@ export interface Database {
           title?: string;
           year?: string | null;
           author_id?: number;
+          cover_image?: string | null;
         };
       };
       all_quotes: {
@@ -114,6 +117,7 @@ export interface Database {
 export type QuoteBookDetails = {
   all_books: {
     title: string;
+    cover_image: string | null;
   };
 };
 
