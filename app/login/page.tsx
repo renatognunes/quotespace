@@ -2,5 +2,9 @@ import React from "react";
 import LoginForm from "../components/forms/LoginForm";
 
 export default function Page() {
-  return <LoginForm />;
+  return (
+    <section className="mx-auto w-[50rem]" aria-label="Login Page">
+      <LoginForm />
+    </section>
+  );
 }

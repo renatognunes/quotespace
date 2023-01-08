@@ -17,7 +17,7 @@ export default async function Page() {
 
   return (
     <section aria-label="All quotes">
-      <h1 className="text-lg font-bold text-slate-700">My quotes</h1>
+      <h1 className="text-lg font-bold text-white">My quotes</h1>
       {/* @ts-expect-error Server Component */}
       <Feed quotes={quotes as AllQuotes[]} />
     </section>

@@ -42,23 +42,23 @@ export default function QuoteForm({ books, setOpen }: QuoteFormProps) {
         e.preventDefault();
         handleQuote();
       }}
-      className="flex flex-col gap-10 text-md"
+      className="flex flex-col gap-6 text-md"
     >
-      <label className="flex flex-col">
+      <label className="flex flex-col font-light text-white">
         Quote
         <textarea
           required
-          className="rounded-md border px-2 py-2"
+          className="mt-2 rounded-md border border-slate-700 bg-slate-800 px-4 py-2 shadow-sm"
           name="text"
           onChange={(e) => setText(e.target.value)}
         />
       </label>
-      <label className="flex flex-col">
+      <label className="flex flex-col font-light text-white">
         From Book
         <select
           required
           defaultValue="-1"
-          className="rounded-md border px-2 py-2"
+          className="mt-2 rounded-md border border-slate-700 bg-slate-800 px-4 py-2 shadow-sm"
           onChange={(e) => setBookId(e.target.value)}
         >
           <option disabled value="-1">
@@ -72,7 +72,7 @@ export default function QuoteForm({ books, setOpen }: QuoteFormProps) {
         </select>
       </label>
       <input
-        className="mt-12 max-w-min cursor-pointer self-end rounded-lg border bg-lime-600 px-6 py-2 font-bold text-white"
+        className="button-primary flex max-w-min cursor-pointer items-center justify-center gap-2 self-end justify-self-end rounded-full border border-slate-800 px-6 py-2 text-md text-white"
         type="submit"
         value="Publish"
       />

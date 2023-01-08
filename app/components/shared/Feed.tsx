@@ -6,7 +6,7 @@ export const Feed = async ({ quotes }: { quotes: AllQuotes[] }) => {
   const likedQuotesIds = await getLikedQuotesIds();
 
   return (
-    <div className="m-auto mt-4 flex flex-col gap-6">
+    <div className="mt-4 flex flex-col gap-6">
       {quotes.map((quote) => (
         <Card
           key={quote.id}

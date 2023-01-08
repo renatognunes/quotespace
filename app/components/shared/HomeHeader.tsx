@@ -5,12 +5,27 @@ import Image from "next/image";
 import { AllBooks } from "../../../supabase/types";
 import { XMarkIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 import QuoteForm from "./../forms/QuoteForm";
+import { supabase } from "../../../supabase/client";
 // import { supabase } from "../../../supabase/client";
 // import { REALTIME_LISTEN_TYPES } from "@supabase/supabase-js";
 // import { Feed } from "./../shared/Feed";
 
 export const HomeHeader = ({ books }: { books: AllBooks[] }) => {
   const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState("");
+
+  useEffect(() => {
+    const getUserId = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        setUserId(user.id);
+      }
+    };
+    getUserId();
+  }, []);
   // const [quotes, setQuotes] = useState<AllQuotes[]>([]);
 
   // useEffect(() => {
@@ -43,34 +58,31 @@ export const HomeHeader = ({ books }: { books: AllBooks[] }) => {
 
   return (
     <div>
-      <div className="flex flex-row content-center justify-between">
-        <h1 className="text-lg font-bold text-slate-700">Top Quotes</h1>
-        <button
-          onClick={() => setOpen(!open)}
-          className="flex items-center justify-center gap-4 rounded-md border bg-lime-600 px-4 py-2 text-md font-semibold text-white"
-        >
-          Quote
-          <PencilSquareIcon className="h-6 w-6 text-white" />
-        </button>
+      <div className="flex flex-row items-center justify-between">
+        <h1 className="text-lg font-bold text-white">Top Quotes</h1>
+        {userId && (
+          <button
+            onClick={() => setOpen(!open)}
+            className="button-primary flex items-center justify-center gap-2 rounded-full border border-slate-800 px-6 py-2 text-md text-white"
+          >
+            Quote
+            <PencilSquareIcon className="h-5 w-5 text-white" />
+          </button>
+        )}
       </div>
       {open && (
-        <div className="before:fixed before:right-0 before:top-0 before:h-screen before:w-screen before:bg-black before:opacity-50 before:content-['']">
-          <article className="fixed right-0 left-0 m-auto max-w-[60rem] rounded-md border bg-zinc-50 p-6 shadow-md">
+        <div className="before:fixed before:right-0 before:top-0 before:h-screen before:w-screen before:bg-black before:opacity-60 before:content-['']">
+          <article className="fixed right-0 left-0 top-16 m-auto max-w-[60rem] rounded-2xl border border-slate-800 bg-black py-10 px-14 shadow-inner shadow-slate-800">
             <header
               aria-label="New Quote Popup"
-              className="mb-6 flex flex-row justify-between"
+              className="mb-6 flex flex-row justify-between text-white"
             >
-              <h2 className="text-lg font-semibold text-slate-700">
-                New Quote
-              </h2>
+              <h2 className="text-lg font-semibold">New Quote</h2>
               <button onClick={() => setOpen(false)}>
-                <XMarkIcon className="mr-2 inline h-6 w-6 text-slate-700" />
+                <XMarkIcon className="mr-2 inline h-5 w-5" />
               </button>
             </header>
-
-            <div className="">
-              <QuoteForm setOpen={setOpen} books={books} />
-            </div>
+            <QuoteForm setOpen={setOpen} books={books} />
           </article>
         </div>
       )}

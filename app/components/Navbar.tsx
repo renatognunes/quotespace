@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { signOut, supabase } from "../../supabase/client";
+import { NavLink } from "./shared/NavLink";
 
 export default function Navbar({ isLogged }: any) {
   const router = useRouter();
@@ -18,27 +19,30 @@ export default function Navbar({ isLogged }: any) {
     }
   };
   return (
-    <nav aria-label="Main navigation" className="h-10">
-      <ul className="flex h-full w-full flex-row items-center justify-end gap-4 text-md font-semibold text-[#212121]">
-        <li className="mr-auto text-lg">
-          <Link href="/" aria-label="Home">
+    <nav
+      aria-label="Main navigation"
+      className="h-12 border-b border-slate-800"
+    >
+      <ul className="flex h-full w-full flex-row items-center justify-end gap-6 text-md text-white">
+        <li className="mr-auto text-lg font-semibold">
+          <NavLink href="/" aria-label="Home">
             Quotespace
-          </Link>
+          </NavLink>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
-          <Link href="/likes">Likes</Link>
+          <NavLink href="/bookmarks">Booksmarks</NavLink>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
-          <Link href="/profile">Profile</Link>
+          <NavLink href="/profile">Profile</NavLink>
         </li>
         <li className={isLogged ? "block" : "hidden"}>
           <button onClick={handleLogout}>Logout</button>
         </li>
         <li className={!isLogged ? "block" : "hidden"}>
-          <Link href="/signup">Sign Up</Link>
+          <NavLink href="/signup">Sign up</NavLink>
         </li>
         <li className={!isLogged ? "block" : "hidden"}>
-          <Link href="/login">Login</Link>
+          <NavLink href="/login">Login</NavLink>
         </li>
       </ul>
     </nav>
