@@ -29,6 +29,7 @@ export default function SignUpForm() {
         <label className="flex flex-col font-light text-white">
           Username
           <input
+            autoComplete="none"
             className="mt-2 rounded-md border border-slate-700 bg-slate-800 px-4 py-2 shadow-sm"
             type="text"
             name="Username"
