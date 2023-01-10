@@ -5,10 +5,7 @@ import {
   HeartIcon,
   BookmarkIcon,
 } from "@heroicons/react/24/outline";
-import {
-  HeartIcon as HeartIconSolid,
-  BookmarkIcon as BookmarkIconSolid,
-} from "@heroicons/react/24/solid";
+import { BookmarkIcon as BookmarkIconSolid } from "@heroicons/react/24/solid";
 import React, { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { AllQuotes } from "../../../supabase/types";
@@ -71,6 +68,8 @@ export const Card = ({
     }
   }, [userId, like, quote, nOfLikes]);
 
+  const text = encodeURI(`${quote.quote} - ${quote.all_books.title}`);
+
   return (
     <article
       className="flex w-full content-center gap-8 rounded-2xl border border-slate-800 p-8  shadow-inner shadow-slate-800"
@@ -106,12 +105,15 @@ export const Card = ({
             )}
             <span>{nOfLikes}</span>
           </button>
-          <button
+          <a
+            href={`http://twitter.com/share?text=${text}&url=`}
+            target="_blank"
             className="flex items-center text-lg text-white"
             aria-label="Share quote"
+            rel="noreferrer"
           >
             <ArrowUpTrayIcon className="inline h-6 w-6" />
-          </button>
+          </a>
         </div>
       </div>
     </article>
